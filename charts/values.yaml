@@ -1,0 +1,18 @@
+scheduler:
+  name: my-noderesourcesfit 
+  image: mike911209/my-noderesourcesfit:latest
+  imagePullPolicy: Always
+  replicaCount: 1
+  leaderElect: false
+
+plugins:
+  enabled: ["MyNoderesourcesfit"]
+
+pluginConfig:
+- name: MyNoderesourcesfit
+  args:
+    scoringStrategy:
+      type: "LeastAllocated"
+      resources:
+        - name: cpu
+          weight: 1

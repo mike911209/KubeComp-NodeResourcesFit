@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx1
+  labels:
+    name: nginx
+spec:
+  schedulerName: my-noderesourcesfit
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx2
+  labels:
+    name: nginx
+spec:
+  schedulerName: my-noderesourcesfit
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+    
