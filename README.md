@@ -9,4 +9,4 @@ Implement interface:
 - ScoreExtensions
 - Permit
 
-Arthor: Mike911209
+Author: Mike911209
