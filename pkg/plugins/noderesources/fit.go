@@ -376,15 +376,11 @@ func hasRestartableInitContainer(pod *v1.Pod) bool {
 
 // PreFilter invoked at the prefilter extension point.
 func (f *MyNoderesourcesfit) PreFilter(ctx context.Context, cycleState *framework.CycleState, pod *v1.Pod) (*framework.PreFilterResult, *framework.Status) {
-
 	log.Printf("Pod %s is in Prefilter phase.", pod.Name)
 
 	if pod.ObjectMeta.Labels["preprocess"] != "done" {
-		log.Printf("Pod %s's preprocess not done yet.", pod.Name)
 		return nil, framework.NewStatus(framework.Unschedulable, "preprocess not done yet")
 	}
-
-	log.Printf("Pod %s's preprocess done, can be scheduled", pod.Name)
 
 	if !f.enableSidecarContainers && hasRestartableInitContainer(pod) {
 		// Scheduler will calculate resources usage for a Pod containing
@@ -520,11 +516,11 @@ func fitsRequest(podRequest *preFilterState, nodeInfo *framework.NodeInfo, ignor
 			}
 		}
 
+		// check if using MIG resources
 		if rNameSplit[1][:len(migResourcePrefix)] == migResourcePrefix {
 			useMig = true
 			// requestSlice is of the pattern like: 1g.5gb
 			requestSlice := rNameSplit[1][len(migResourcePrefix)+1:]
-			// log.Printf("requestSlice: %s", requestSlice)
 			gpuRequestMap[requestSlice] += rQuant
 			cpu, memory, err := extractCPUAndMemory(requestSlice)
 			if err != nil {
